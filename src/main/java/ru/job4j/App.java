@@ -22,7 +22,7 @@ public class App {
         Thread t2 = new Thread(
                 () -> {
                     Client subscriber = new Client();
-                    String rsl = subscriber.get("queue");
+                    String rsl = subscriber.get("queue", "weather");
                     System.out.println("SUBSCRIBER RESULT: " + rsl);
                 },
                 "SUBSCRIBER"

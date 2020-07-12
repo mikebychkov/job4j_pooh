@@ -36,11 +36,7 @@ public class ClientHandler implements Runnable {
 
             BlockingQueue<String> queue = new LinkedBlockingQueue<>();
 
-            if ("queue".equals(type)) {
-                queue = srv.getQueue(queueName, false);
-            } else if ("topic".equals(type)) {
-                queue = srv.getQueue(queueName, true);
-            }
+            queue = srv.getQueue(queueName, new DispatchQueryType().dispatch(type));
 
             if ("POST".equals(mode)) {
                 System.out.println(Thread.currentThread().getName() + " : " + "Reading request data...");
@@ -55,7 +51,7 @@ public class ClientHandler implements Runnable {
                 writer.flush();
             }
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

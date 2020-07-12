@@ -29,7 +29,7 @@ public class Client {
         }
     }
 
-    public String get(String type) {
+    public String get(String type, String name) {
         String rsl = null;
         try {
             System.out.println(Thread.currentThread().getName() + " : " + "Establishing connection to the server...");
@@ -39,7 +39,7 @@ public class Client {
 
                 System.out.println(Thread.currentThread().getName() + " : " + "Writing query to the server...");
 
-                writer.printf("GET/%s/weather%n", type);
+                writer.printf("GET/%s/%s%n", type, name);
                 writer.flush();
                 rsl = reader.readLine();
             }
