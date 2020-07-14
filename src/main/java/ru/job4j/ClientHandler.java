@@ -38,18 +38,8 @@ public class ClientHandler implements Runnable {
 
             queue = srv.getQueue(queueName, new DispatchQueryType().dispatch(type));
 
-            if ("POST".equals(mode)) {
-                System.out.println(Thread.currentThread().getName() + " : " + "Reading request data...");
-                String inData = reader.readLine();
-                System.out.println(Thread.currentThread().getName() + " : " + "Request data: " + inData);
-                queue.add(inData);
-            } else if ("GET".equals(mode)) {
-                System.out.println(Thread.currentThread().getName() + " : " + "Polling data from queue...");
-                String outData = queue.poll();
-                System.out.println(Thread.currentThread().getName() + " : " + "Data from queue: " + outData);
-                writer.println(outData);
-                writer.flush();
-            }
+            DispatchQueryModeParam param = new DispatchQueryModeParam(mode, queue, reader, writer);
+            new DispatchQueryMode().dispatch(param);
 
         } catch (Exception e) {
             e.printStackTrace();
